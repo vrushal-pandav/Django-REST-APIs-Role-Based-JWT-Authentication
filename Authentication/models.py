@@ -16,7 +16,7 @@ class CustomUserManager(BaseUserManager):
 
         # Resolve roleID
         if role_id is None:
-            role_obj,_ = Roles.objects.get_or_create(name='Customer')  # default role
+            role_obj,_ = Roles.objects.get_or_create(name='User')  # default role
         elif isinstance(role_id, int):
             role_obj = Roles.objects.get(pk=role_id)
         elif isinstance(role_id, str):
@@ -44,9 +44,8 @@ class CustomUserManager(BaseUserManager):
 
         # Remove roleID and accountSateID from extra_fields if present to avoid duplicate
         extra_fields.pop('role_id', None)
-        extra_fields.pop('account_state_id', None)
 
-        return self.create_user(email=email, password=password, role_id='Admin', account_state_id='Active',user_name=user_name, **extra_fields)
+        return self.create_user(email=email, password=password, role_id='Admin', user_name=user_name, **extra_fields)
     
 
 class Users(AbstractBaseUser, PermissionsMixin):
